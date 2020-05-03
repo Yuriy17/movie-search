@@ -1,0 +1,27 @@
+html {
+  // font-size: 62.5%;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  font-weight: normal;
+  min-height: 100vh;
+}
+
+* {
+  // box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  outline: 0;
+}
+
+@include media-breakpoint-down(xs) {
+  .container{
+    width: auto;
+  }
+}
+.container-fluid{
+  width: auto;
+}

@@ -1,0 +1,50 @@
+@charset 'UTF-8';
+
+
+  
+@import
+  'abstracts/mixins', 
+  'abstracts/placeholders', 
+  'abstracts/variables'; 
+
+// Required
+@import 
+  '~bootstrap/scss/functions',
+  '~bootstrap/scss/variables',
+  '~bootstrap/scss/mixins',
+  '~swiper/swiper.scss';
+
+// Optional
+@import 
+  '~bootstrap/scss/buttons',
+  '~bootstrap/scss/input-group',
+  '~bootstrap/scss/utilities',
+  '~bootstrap/scss/forms',
+  '~bootstrap/scss/grid',
+  '~swiper/components/pagination/pagination.scss',
+  '~swiper/components/navigation/navigation.scss';
+
+@import
+  'vendors/normalize.min';
+
+@import
+  'base/fonts',
+  'base/base';
+
+@import
+  'components/swiper',
+  'components/search-bar';
+  
+@import
+  'layouts/header',
+  'layouts/footer',
+  'layouts/main';
+
+  
+
+  
+
+
+
+
+
