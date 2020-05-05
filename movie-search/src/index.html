@@ -17,14 +17,14 @@
   </header>
 
   <main class="main container">
-    <form action="" class="search-form">
+    <form method="GET" id="searchForm" class="search-form">
 
       <div class="p-1 pl-2 bg-light rounded rounded-pill shadow-sm mb-4">
         <div class="input-group">
-          <input id="searchInput" type="search" placeholder="What're you searching for?" aria-describedby="button-addon1"
-            autocomplete="off" class="form-control border-0 bg-light">
+          <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon1"
+            name="t" autocomplete="off" class="form-control border-0 bg-light search-form__input">
           <div class="input-group-append">
-            <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i
+            <button id="button-addon1" type="submit" class="btn btn-link text-primary search-form__button"><i
                 class="fa fa-search"></i></button>
           </div>
         </div>
