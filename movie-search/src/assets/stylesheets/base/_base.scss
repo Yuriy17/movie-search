@@ -5,7 +5,7 @@ html {
 body {
   font-family: Roboto, sans-serif;
   font-weight: normal;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 * {
@@ -17,11 +17,8 @@ a {
   outline: 0;
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .container{
     width: auto;
   }
-}
-.container-fluid{
-  width: auto;
 }
