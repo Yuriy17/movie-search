@@ -1,36 +1,38 @@
-import { apiKey } from '../utils/utils';
+import { apiKey } from '../utils/constants';
 
 export default class Search {
-  constructor() {
+  constructor(createSlideElement) {
+    this.createSlideElement = createSlideElement;
     this.searchForm = document.getElementById('searchForm');
     this.searchInputElement = this.searchForm.querySelector(
       '.search-form__input',
     );
   }
 
-  init() {
+
+  init(swiper) {
     this.searchInputElement.focus();
-    this.searchForm.addEventListener('submit', (e) => {
+    this.searchForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const formData = new FormData(this);
-      ajaxSend(formData);
-      this.reset(); // очищаем поля формы
+      // const formData = new FormData(this);
+      const searchResult = await Search.search('action');
+      searchResult.Search.forEach((result) => {
+        swiper.appendSlide(this.createSlideElement(result));
+      });
+      // const promises = searchResult.Search.map((result) => new Promise((resolve, reject) => this.createSlideElement(result)));
+      // console.log(imagesResult);
     });
   }
 
-  ajaxSend(formData) {
-    fetch(`http://www.omdbapi.com/?apikey=${apiKey}`, { // файл-обработчик
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded', // отправляемые данные
-      },
-      body: formData,
-    })
-      .then((response) => console.log(`Сообщение отправлено методом fetch\n${response}`))
+  static async search(title) {
+    const results = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=${title}&page=2`)
+      .then((response) => response.json())
       .catch((error) => console.error(error));
+    console.log(results);
+    return results;
   }
 }
-const obj = {
+/* const obj = {
   Title: 'Run',
   Year: '1991',
   Rated: 'R',
@@ -62,3 +64,4 @@ const obj = {
   Website: 'N/A',
   Response: 'True',
 };
+ */

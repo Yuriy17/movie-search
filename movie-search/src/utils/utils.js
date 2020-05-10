@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export function shuffle(arr) {
   let j;
   let temp;

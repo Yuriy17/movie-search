@@ -3,11 +3,12 @@ import Slider from './Slider';
 
 export default class App {
   constructor() {
-    this.search = new Search();
     this.slider = new Slider();
+    this.search = new Search(Slider.createSlideElement);
   }
 
   init() {
-    this.search.init();
+    this.slider.init();
+    this.search.init(this.slider.mySwiper);
   }
 }
