@@ -1,8 +1,8 @@
 import { apiKey } from '../utils/constants';
 
 export default class Search {
-  constructor(createSlideElement) {
-    this.createSlideElement = createSlideElement;
+  constructor(appendSlides) {
+    this.appendSlides = appendSlides;
     this.searchForm = document.getElementById('searchForm');
     this.searchInputElement = this.searchForm.querySelector(
       '.search-form__input',
@@ -10,15 +10,15 @@ export default class Search {
   }
 
 
-  init(swiper) {
+  init() {
     this.searchInputElement.focus();
     this.searchForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       // const formData = new FormData(this);
       const searchResult = await Search.search('action');
-      searchResult.Search.forEach((result) => {
-        swiper.appendSlide(this.createSlideElement(result));
-      });
+      this.appendSlides(searchResult);
+
+
       // const promises = searchResult.Search.map((result) => new Promise((resolve, reject) => this.createSlideElement(result)));
       // console.log(imagesResult);
     });

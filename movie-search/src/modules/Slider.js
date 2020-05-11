@@ -1,8 +1,39 @@
-import Swiper from 'swiper';
+
+import {
+  Swiper, Navigation, Pagination,
+} from 'swiper/js/swiper.esm';
+// Install modules
+Swiper.use([Navigation, Pagination]);
 
 export default class Slider {
-  constructor() {
+  constructor(swiper) {
+    this.swiper = swiper;
     this.sliderElement = document.getElementById('slider');
+    this.totalResults = 0;
+    this.currentPage = 1;
+  }
+
+  setCurrentPage(currentPage) {
+    this.currentPage = currentPage;
+  }
+
+  getCurrentPage() {
+    return this.currentPage;
+  }
+
+  setTotalResults(totalResults) {
+    this.totalResults = totalResults;
+  }
+
+  getTotalResults() {
+    return this.totalResults;
+  }
+
+  appendSlides(searchResult) {
+    this.setTotalResults(searchResult.totalResults);
+    searchResult.Search.forEach((result) => {
+      this.mySwiper.appendSlide(this.createSlideElement(result));
+    });
   }
 
   static createSlideElement(slide) {
@@ -22,9 +53,9 @@ export default class Slider {
   init() {
     this.mySwiper = new Swiper('.swiper-container', { // Optional parameters
       // slidesPerView: 3,
+      centerInsufficientSlides: true,
       slidesPerColumn: 2,
       spaceBetween: 30,
-      // centerInsufficientSlides: true,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -36,13 +67,6 @@ export default class Slider {
         prevEl: '.swiper-button-prev',
       },
       breakpoints: {
-        // when window width is >= 320px
-        /*         320: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-          slidesPerGroup: 2,
-        }, */
-        // when window width is >= 480px
         480: {
           slidesPerView: 2,
           spaceBetween: 20,
@@ -53,13 +77,16 @@ export default class Slider {
           spaceBetween: 30,
           slidesPerGroup: 3,
         },
-        // when window width is >= 640px
         992: {
           slidesPerView: 4,
           spaceBetween: 40,
           slidesPerGroup: 4,
         },
       },
+    });
+    // eslint-disable-next-line prefer-arrow-callback
+    this.mySwiper.on('slideChange', () => {
+      console.log(this.mySwiper.realIndex);
     });
   }
 }

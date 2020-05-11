@@ -4,7 +4,9 @@ import Slider from './Slider';
 export default class App {
   constructor() {
     this.slider = new Slider();
-    this.search = new Search(Slider.createSlideElement);
+    this.search = new Search(
+      this.slider.appendSlides.bind(this),
+    );
   }
 
   init() {
