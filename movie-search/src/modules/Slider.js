@@ -10,15 +10,15 @@ export default class Slider {
     this.swiper = swiper;
     this.sliderElement = document.getElementById('slider');
     this.totalResults = 0;
-    this.currentPage = 1;
+    this.maxSlideIndex = 1;
   }
 
-  setCurrentPage(currentPage) {
-    this.currentPage = currentPage;
+  setGreatestPage(greatestPage) {
+    this.greatestPage = greatestPage;
   }
 
-  getCurrentPage() {
-    return this.currentPage;
+  getGreatestPage() {
+    return this.greatestPage;
   }
 
   setTotalResults(totalResults) {
@@ -32,7 +32,7 @@ export default class Slider {
   appendSlides(searchResult) {
     this.setTotalResults(searchResult.totalResults);
     searchResult.Search.forEach((result) => {
-      this.mySwiper.appendSlide(this.createSlideElement(result));
+      this.mySwiper.appendSlide(Slider.createSlideElement(result));
     });
   }
 
@@ -84,9 +84,22 @@ export default class Slider {
         },
       },
     });
+    this.mySwiper.on('reachEnd', () => {
+      if (this.mySwiper.activeIndex >= this.maxSlideIndex) {
+        searchResult.Search.forEach((result) => {
+          this.mySwiper.appendSlide(Slider.createSlideElement(result));
+        });
+      }
+      console.log(this.mySwiper.activeIndex);
+    });
     // eslint-disable-next-line prefer-arrow-callback
     this.mySwiper.on('slideChange', () => {
-      console.log(this.mySwiper.realIndex);
+      if (this.mySwiper.activeIndex >= this.maxSlideIndex) {
+        searchResult.Search.forEach((result) => {
+          this.mySwiper.appendSlide(Slider.createSlideElement(result));
+        });
+      }
+      console.log(this.mySwiper.activeIndex);
     });
   }
 }

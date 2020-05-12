@@ -1,8 +1,7 @@
 import { apiKey } from '../utils/constants';
 
 export default class Search {
-  constructor(appendSlides) {
-    this.appendSlides = appendSlides;
+  constructor() {
     this.searchForm = document.getElementById('searchForm');
     this.searchInputElement = this.searchForm.querySelector(
       '.search-form__input',
@@ -10,13 +9,13 @@ export default class Search {
   }
 
 
-  init() {
+  init(appendSlides, getGreatestPage) {
     this.searchInputElement.focus();
     this.searchForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       // const formData = new FormData(this);
-      const searchResult = await Search.search('action');
-      this.appendSlides(searchResult);
+      const searchResult = await Search.search('action', getGreatestPage());
+      appendSlides(searchResult);
 
 
       // const promises = searchResult.Search.map((result) => new Promise((resolve, reject) => this.createSlideElement(result)));
@@ -24,8 +23,8 @@ export default class Search {
     });
   }
 
-  static async search(title) {
-    const results = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=${title}&page=2`)
+  static async search(title, greatestPage) {
+    const results = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=${title}&page=${greatestPage}`)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     console.log(results);
