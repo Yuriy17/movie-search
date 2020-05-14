@@ -1,4 +1,3 @@
-import { apiKey } from '../utils/constants';
 
 export default class Search {
   constructor() {
@@ -24,7 +23,9 @@ export default class Search {
   }
 
   static async search(title, greatestPage) {
-    const results = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=${title}&page=${greatestPage}`)
+    const results = await fetch(
+      `http://www.omdbapi.com/?apikey=${process.env.API_KEY}&s=${title}&page=${greatestPage}`,
+    )
       .then((response) => response.json())
       .catch((error) => console.error(error));
     console.log(results);

@@ -8,7 +8,7 @@ export default class App {
   }
 
   init() {
-    this.slider.init();
+    this.slider.init(Search.search);
     this.search.init(
       this.slider.appendSlides.bind(this.slider),
       this.slider.getGreatestPage.bind(this.slider),

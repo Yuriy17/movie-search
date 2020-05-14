@@ -50,7 +50,7 @@ export default class Slider {
           </div>`;
   }
 
-  init() {
+  init(search) {
     this.mySwiper = new Swiper('.swiper-container', { // Optional parameters
       // slidesPerView: 3,
       centerInsufficientSlides: true,
@@ -84,22 +84,28 @@ export default class Slider {
         },
       },
     });
-    this.mySwiper.on('reachEnd', () => {
+    this.mySwiper.on('reachEnd', async () => {
+      /*       console.log(this.maxSlideIndex);
+
+      console.log(this.mySwiper.activeIndex); */
       if (this.mySwiper.activeIndex >= this.maxSlideIndex) {
+        const searchResult = await search('action', this.getGreatestPage());
         searchResult.Search.forEach((result) => {
           this.mySwiper.appendSlide(Slider.createSlideElement(result));
         });
       }
-      console.log(this.mySwiper.activeIndex);
     });
     // eslint-disable-next-line prefer-arrow-callback
-    this.mySwiper.on('slideChange', () => {
-      if (this.mySwiper.activeIndex >= this.maxSlideIndex) {
+    this.mySwiper.on('slideChange', async () => {
+      console.log(this.mySwiper.activeIndex);
+
+      /*       if (this.mySwiper.activeIndex >= this.maxSlideIndex) {
+        const searchResult = await search('action', this.getGreatestPage());
         searchResult.Search.forEach((result) => {
           this.mySwiper.appendSlide(Slider.createSlideElement(result));
         });
       }
-      console.log(this.mySwiper.activeIndex);
+      console.log(this.mySwiper.activeIndex); */
     });
   }
 }
