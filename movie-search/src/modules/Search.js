@@ -8,14 +8,14 @@ export default class Search {
   }
 
 
-  init(appendSlides, getGreatestPage) {
+  init(appendSlides, getGreatestPage, setGreatestPage) {
     this.searchInputElement.focus();
     this.searchForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       // const formData = new FormData(this);
+      setGreatestPage(1);
       const searchResult = await Search.search('action', getGreatestPage());
       appendSlides(searchResult);
-
 
       // const promises = searchResult.Search.map((result) => new Promise((resolve, reject) => this.createSlideElement(result)));
       // console.log(imagesResult);

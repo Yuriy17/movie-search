@@ -11,6 +11,7 @@ export default class Slider {
     this.sliderElement = document.getElementById('slider');
     this.totalResults = 0;
     this.maxSlideIndex = 1;
+    this.greatestPage = 1;
   }
 
   setGreatestPage(greatestPage) {
@@ -50,11 +51,11 @@ export default class Slider {
           </div>`;
   }
 
-  init(search) {
+  async init(search) {
     this.mySwiper = new Swiper('.swiper-container', { // Optional parameters
       // slidesPerView: 3,
       centerInsufficientSlides: true,
-      slidesPerColumn: 2,
+      // slidesPerColumn: 2,
       spaceBetween: 30,
       pagination: {
         el: '.swiper-pagination',
@@ -84,20 +85,33 @@ export default class Slider {
         },
       },
     });
+
+    const startResult = await search('action', this.getGreatestPage());
+    startResult.Search.forEach((result) => {
+      this.mySwiper.appendSlide(Slider.createSlideElement(result));
+    });
+
     this.mySwiper.on('reachEnd', async () => {
       /*       console.log(this.maxSlideIndex);
 
-      console.log(this.mySwiper.activeIndex); */
-      if (this.mySwiper.activeIndex >= this.maxSlideIndex) {
-        const searchResult = await search('action', this.getGreatestPage());
-        searchResult.Search.forEach((result) => {
-          this.mySwiper.appendSlide(Slider.createSlideElement(result));
-        });
-      }
+      ;
+      if (this.mySwiper.activeIndex >= this.maxSlideIndex) { */
+
+      this.greatestPage += 1;
+
+      console.log(this.mySwiper.activeIndex);
+      const searchResult = await search('action', this.greatestPage);
+      searchResult.Search.forEach((result) => {
+        this.mySwiper.appendSlide(Slider.createSlideElement(result));
+        // this.mySwiper.update();
+      });
+      // this.mySwiper.slideNext();
+
+      /* } */
     });
     // eslint-disable-next-line prefer-arrow-callback
     this.mySwiper.on('slideChange', async () => {
-      console.log(this.mySwiper.activeIndex);
+      // console.log(this.mySwiper.activeIndex);
 
       /*       if (this.mySwiper.activeIndex >= this.maxSlideIndex) {
         const searchResult = await search('action', this.getGreatestPage());
