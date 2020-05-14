@@ -1,10 +1,9 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const ENV = process.env.npm_lifecycle_event;
 const isDev = ENV === 'dev';
 const isProd = ENV === 'build';
@@ -189,7 +188,6 @@ const config = {
       {from: './src/assets/sounds', to: './assets/sounds/'}, */
       {from: './src/favicon.ico', to: './'},
     ]),
-    new Dotenv(),
   ],
 
   devServer: {
@@ -203,7 +201,16 @@ const config = {
 };
 
 if (isProd) {
-  config.plugins.push(new UglifyJSPlugin());
+  config.plugins.push(new TerserPlugin({
+    parallel: true,
+    cache: true,
+    extractComments: true,
+    terserOptions: {
+      ecma: 5,
+      ie8: false,
+      compress: true,
+      warnings: true,
+    }}));
 }
 
 module.exports = config;
