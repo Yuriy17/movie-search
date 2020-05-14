@@ -1,3 +1,4 @@
+import API_KEY from '../../environment';
 
 export default class Search {
   constructor() {
@@ -23,13 +24,12 @@ export default class Search {
   }
 
   static async search(title, greatestPage) {
-    const results = await fetch(
-      `http://www.omdbapi.com/?apikey=${process.env.API_KEY}&s=${title}&page=${greatestPage}`,
+    const cors = 'https://cors-anywhere.herokuapp.com/';
+    return fetch(
+      `${cors}http://www.omdbapi.com/?apikey=${API_KEY}&s=${title}&page=${greatestPage}`,
     )
       .then((response) => response.json())
       .catch((error) => console.error(error));
-    console.log(results);
-    return results;
   }
 }
 /* const obj = {

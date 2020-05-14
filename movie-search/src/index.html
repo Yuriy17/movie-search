@@ -24,6 +24,10 @@
           <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon1"
             name="t" autocomplete="off" class="form-control border-0 bg-light search-form__input">
           <div class="input-group-append">
+            <div id="loading-icon" class="spinner-border hide-loading" role="status">
+              <span  class="sr-only">Loading...</span>
+            </div>
+            <!-- <i id="loading-icon" class="fa fa-spinner fa-pulse fa-lg hide-loading"></i> -->
             <button id="button-addon1" type="submit" class="btn btn-link text-primary search-form__button"><i
                 class="fa fa-search"></i></button>
           </div>
@@ -72,7 +76,6 @@
       </div>
     </div>
   </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 </body>
 
 </html>

@@ -52,11 +52,11 @@ export default class Slider {
   }
 
   async init(search) {
-    this.mySwiper = new Swiper('.swiper-container', { // Optional parameters
-      // slidesPerView: 3,
+    this.mySwiper = new Swiper('.swiper-container', {
       centerInsufficientSlides: true,
-      // slidesPerColumn: 2,
-      spaceBetween: 30,
+      slidesPerColumn: 2,
+      slidesPerColumnFill: 'column',
+      slidesPerGroup: 1,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -71,17 +71,14 @@ export default class Slider {
         480: {
           slidesPerView: 2,
           spaceBetween: 20,
-          slidesPerGroup: 2,
         },
         768: {
           slidesPerView: 3,
           spaceBetween: 30,
-          slidesPerGroup: 3,
         },
         992: {
           slidesPerView: 4,
           spaceBetween: 40,
-          slidesPerGroup: 4,
         },
       },
     });
@@ -91,35 +88,23 @@ export default class Slider {
       this.mySwiper.appendSlide(Slider.createSlideElement(result));
     });
 
-    this.mySwiper.on('reachEnd', async () => {
-      /*       console.log(this.maxSlideIndex);
-
-      ;
-      if (this.mySwiper.activeIndex >= this.maxSlideIndex) { */
-
+    this.mySwiper.on('reachEnd', () => {
       this.greatestPage += 1;
 
-      console.log(this.mySwiper.activeIndex);
-      const searchResult = await search('action', this.greatestPage);
-      searchResult.Search.forEach((result) => {
-        this.mySwiper.appendSlide(Slider.createSlideElement(result));
-        // this.mySwiper.update();
-      });
-      // this.mySwiper.slideNext();
+      document.getElementById('loading-icon').classList.remove('hide-loading');
 
-      /* } */
-    });
-    // eslint-disable-next-line prefer-arrow-callback
-    this.mySwiper.on('slideChange', async () => {
-      // console.log(this.mySwiper.activeIndex);
-
-      /*       if (this.mySwiper.activeIndex >= this.maxSlideIndex) {
-        const searchResult = await search('action', this.getGreatestPage());
-        searchResult.Search.forEach((result) => {
-          this.mySwiper.appendSlide(Slider.createSlideElement(result));
+      const promises = [];
+      search('action', this.greatestPage)
+        .then((data) => {
+          data.Search.forEach((result) => {
+            promises.push(new Promise(() => {
+              this.mySwiper.appendSlide(Slider.createSlideElement(result));
+            }));
+          });
         });
-      }
-      console.log(this.mySwiper.activeIndex); */
+
+      Promise.allSettled(promises)
+        .then(() => document.getElementById('loading-icon').classList.add('hide-loading'));
     });
   }
 }
