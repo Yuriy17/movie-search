@@ -24,9 +24,9 @@ export default class Search {
   }
 
   static async search(title, greatestPage) {
-    const cors = 'https://cors-anywhere.herokuapp.com/';
+    const corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
     return fetch(
-      `${cors}http://www.omdbapi.com/?apikey=${API_KEY}&s=${title}&page=${greatestPage}`,
+      `${corsAnywhere}http://www.omdbapi.com/?apikey=${API_KEY}&s=${title}&page=${greatestPage}`,
     )
       .then((response) => response.json())
       .catch((error) => console.error(error));
