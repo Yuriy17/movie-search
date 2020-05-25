@@ -8,10 +8,10 @@ export default class App {
   }
 
   init() {
-    this.slider.init(Search.search);
+    this.slider.init();
     this.search.init(
       this.slider.appendSlides.bind(this.slider),
-      this.slider.getGreatestPage.bind(this.slider),
+      this.slider.resetSlider.bind(this.slider),
     );
   }
 }

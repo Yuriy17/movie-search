@@ -1,10 +1,10 @@
 import { Swiper, Navigation, Pagination } from 'swiper/js/swiper.esm';
+import { search, loadImage, createSlideElement } from '../utils/utils';
 // Install modules
 Swiper.use([Navigation, Pagination]);
 
 export default class Slider {
-  constructor(swiper) {
-    this.swiper = swiper;
+  constructor() {
     this.sliderElement = document.getElementById('slider');
     this.totalResults = 0;
     this.maxSlideIndex = 1;
@@ -27,14 +27,21 @@ export default class Slider {
     return this.totalResults;
   }
 
+  resetSlider() {
+    this.greatestPage = 1;
+    this.totalResults = 0;
+    this.maxSlideIndex = 1;
+    this.mySwiper.removeAllSlides();
+  }
+
   appendSlides(searchResult) {
     this.setTotalResults(searchResult.totalResults);
     searchResult.Search.forEach((result) => {
-      this.mySwiper.appendSlide(Slider.createSlideElement(result));
+      this.mySwiper.appendSlide(createSlideElement(result));
     });
   }
 
-  async init(search) {
+  async init() {
     this.mySwiper = new Swiper('.swiper-container', {
       centerInsufficientSlides: true,
       slidesPerColumn: 2,
@@ -66,52 +73,26 @@ export default class Slider {
       },
     });
 
-    /*     const startResult = await search('action', this.getGreatestPage());
-    startResult.Search.forEach((result) => {
-      this.mySwiper.appendSlide(Slider.createSlideElement(result));
-    }); */
-
-
-    document.getElementById('loading-icon').classList.remove('hide-loading');
     this.renderSearchResult(search('action', this.greatestPage));
-
+    this.mySwiper.on('slideChange', () => {
+      // console.log(this.mySwiper.activeIndex);
+    });
     this.mySwiper.on('reachEnd', () => {
-      this.greatestPage += 1;
-
-      document.getElementById('loading-icon').classList.remove('hide-loading');
-      this.renderSearchResult(search('action', this.greatestPage));
-      /* const promises = [];
-       search('action', this.greatestPage).then((data) => {
-        data.Search.forEach((result) => {
-          promises.push(
-            new Promise(() => {
-              this.mySwiper.appendSlide(Slider.createSlideElement(result));
-              return Slider.loadImage(result.Poster)
-                .then((img) => {
-                  const posterBlock = this.mySwiper.slides[
-                    this.mySwiper.slides.length - 1
-                  ].querySelector('.swiper-slide__poster-block');
-                  console.log(posterBlock);
-
-                  posterBlock.firstElementChild.remove();
-                  posterBlock.append(img);
-                })
-                .catch((error) => console.error(error));
-            }),
-          );
-        });
-      });
-
-      Promise.allSettled(promises).then(() => document.getElementById('loading-icon').classList.add('hide-loading')); */
+      console.log(this.mySwiper.activeIndex);
+      if (this.mySwiper.activeIndex !== 0) {
+        this.greatestPage += 1;
+        this.renderSearchResult(search('action', this.greatestPage));
+      }
     });
   }
 
   renderSearchResult(resultPromise) {
     const postersInfo = [];
+    document.getElementById('loading-icon').classList.remove('hide-loading');
     resultPromise
       .then((data) => {
         data.Search.forEach((result) => {
-          const slideElement = Slider.createSlideElement(result);
+          const slideElement = createSlideElement(result);
           this.mySwiper.appendSlide(slideElement);
           postersInfo.push({ poster: result.Poster, element: slideElement });
         });
@@ -119,54 +100,11 @@ export default class Slider {
       .then(() => {
         const posterPromises = [];
         postersInfo.forEach((object) => {
-          // await setTimeout(()=>{},10000);
-          posterPromises.push(Slider.loadImage(object.poster).then((img) => new Promise(() => {
-            const posterBlock = object.element.querySelector('.swiper-slide__poster-block');
-            if (posterBlock.firstElementChild) {
-              posterBlock.firstElementChild.remove();
-            }
-            posterBlock.append(img);
-          })));
+          posterPromises.push(loadImage(object.poster, object.element));
         });
-        Promise.all(posterPromises).then(() => {
-          console.log('sdfsdfsdf');
-
+        Promise.allSettled(posterPromises).then(() => {
           document.getElementById('loading-icon').classList.add('hide-loading');
         });
       });
-  }
-
-  static createSlideElement(slide) {
-    const slideElement = document.createElement('div');
-    slideElement.classList.add('swiper-slide');
-
-    slideElement.innerHTML = `
-    <div class="swiper-slide__title">${slide.Title}</div>
-    <div class="swiper-slide__poster-block">
-      <div class="spinner-border" role="status">
-        <span  class="sr-only">Loading...</span>
-      </div>
-    </div>
-    <div class="swiper-slide__year">${slide.Year}</div>
-    <div class="swiper-slide__rating">
-      <i class="swiper-slide__rating-star fa fa-star"></i>
-      <span class="swiper-slide__rating-rank">${slide.imdbRating}</span>
-    </div>
-    `;
-
-    return slideElement;
-  }
-
-  static loadImage(url) {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.addEventListener('load', () => resolve(img));
-      img.addEventListener('error', function () {
-        this.onerror = null;
-        this.src = './assets/img/poster-not-available.jpg';
-        reject(new Error(`Failed to load image's URL: ${url}`));
-      });
-      img.src = url;
-    });
   }
 }
