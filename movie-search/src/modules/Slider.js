@@ -34,12 +34,6 @@ export default class Slider {
     this.mySwiper.removeAllSlides();
   }
 
-  appendSlides(searchResult) {
-    this.setTotalResults(searchResult.totalResults);
-    searchResult.Search.forEach((result) => {
-      this.mySwiper.appendSlide(createSlideElement(result));
-    });
-  }
 
   async init() {
     this.mySwiper = new Swiper('.swiper-container', {
@@ -75,7 +69,7 @@ export default class Slider {
 
     this.renderSearchResult(search('action', this.greatestPage));
     this.mySwiper.on('slideChange', () => {
-      // console.log(this.mySwiper.activeIndex);
+      console.log(this.mySwiper.activeIndex);
     });
     this.mySwiper.on('reachEnd', () => {
       console.log(this.mySwiper.activeIndex);
@@ -89,14 +83,15 @@ export default class Slider {
   renderSearchResult(resultPromise) {
     const postersInfo = [];
     document.getElementById('loading-icon').classList.remove('hide-loading');
-    resultPromise
-      .then((data) => {
-        data.Search.forEach((result) => {
-          const slideElement = createSlideElement(result);
-          this.mySwiper.appendSlide(slideElement);
-          postersInfo.push({ poster: result.Poster, element: slideElement });
-        });
-      })
+    console.log(resultPromise);
+
+    resultPromise.then((data) => {
+      data.Search.forEach((result) => {
+        const slideElement = createSlideElement(result);
+        this.mySwiper.appendSlide(slideElement);
+        postersInfo.push({ poster: result.Poster, element: slideElement });
+      });
+    })
       .then(() => {
         const posterPromises = [];
         postersInfo.forEach((object) => {

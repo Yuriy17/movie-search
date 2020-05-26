@@ -9,14 +9,14 @@ export default class Search {
   }
 
 
-  init(appendSlides, resetSlider) {
+  init(renderSearchResult, resetSlider) {
     this.searchInputElement.focus();
     this.searchForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       resetSlider();
       const inputElement = e.target[0];
       const searchResult = await search(inputElement.value);
-      appendSlides(searchResult);
+      renderSearchResult(searchResult);
     });
   }
 }
