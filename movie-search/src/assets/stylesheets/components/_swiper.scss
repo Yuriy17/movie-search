@@ -31,7 +31,7 @@
         align-items: center;
         color: $secondary-text-color;
         &__title {
-          font-size: 1.2rem;
+          font-size: 1.5rem;
           width: 95%;
           padding-bottom: 8px;
           text-overflow: ellipsis;
@@ -51,14 +51,14 @@
         &__rating {
           &-star {
             color: $secondary-color;
-            font-size: 1rem;
+            font-size: 1.4rem;
           }
           &-rank {
-            font-size: 1rem;
+            font-size: 1.4rem;
           }
         }
         &__year {
-          font-size: 0.8rem;
+          font-size: 1.3rem;
           padding: 8px 0;
         }
       }
