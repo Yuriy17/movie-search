@@ -3,7 +3,7 @@ import Slider from './Slider';
 
 export default class App {
   constructor() {
-    this.slider = new Slider();
+    this.slider = new Slider('Sherlock');
     this.search = new Search();
   }
 
