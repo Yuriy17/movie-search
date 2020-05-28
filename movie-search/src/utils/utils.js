@@ -1,5 +1,37 @@
 import API_KEY from '../../environment';
 
+const corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+
+function getImdbRating(searchResult) {
+  const promises = [];
+
+  searchResult.Search.forEach((result) => {
+    promises.push(
+      fetch(
+        `${corsAnywhere}http://www.omdbapi.com/?apikey=${API_KEY}&i=${result.imdbID}`,
+      ).then((res) => res.json()),
+    );
+  });
+  return Promise.allSettled(promises).then((res) => {
+    res.forEach((element, index) => {
+      const currentFilm = searchResult.Search[index];
+      if (element.imdbID === currentFilm.imdbID) {
+        currentFilm.imdbRating = element.imdbRating;
+      }
+    });
+    return searchResult;
+  });
+}
+
+export async function search(title, greatestPage) {
+  return fetch(
+    `${corsAnywhere}http://www.omdbapi.com/?apikey=${API_KEY}&s=${title}&page=${greatestPage}`,
+  )
+    .then((response) => response.json())
+    .then((response) => getImdbRating(response))
+    .catch((error) => console.error(error));
+}
+
 export function shuffle(arr) {
   let j;
   let temp;
@@ -18,20 +50,13 @@ export function shuffle(arr) {
   return newArr;
 }
 
-export async function search(title, greatestPage) {
-  const corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
-  return fetch(
-    `${corsAnywhere}http://www.omdbapi.com/?apikey=${API_KEY}&s=${title}&page=${greatestPage}`,
-  )
-    .then((response) => response.json())
-    .catch((error) => console.error(error));
-}
-
 export function loadImage(url, slideElement) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.addEventListener('load', () => {
-      const posterBlock = slideElement.querySelector('.swiper-slide__poster-block');
+      const posterBlock = slideElement.querySelector(
+        '.swiper-slide__poster-block',
+      );
       if (posterBlock.firstElementChild) {
         posterBlock.firstElementChild.remove();
       }
