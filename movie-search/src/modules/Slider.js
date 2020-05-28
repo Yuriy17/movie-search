@@ -67,7 +67,6 @@ export default class Slider {
 
     this.renderSearchResult(search(this.currentFilm, this.greatestPage));
     this.mySwiper.on('slideChange', () => {
-      console.log(this.mySwiper.activeIndex);
       if (this.isReachEnd && (this.mySwiper.activeIndex !== 0)) {
         this.greatestPage += 1;
         this.renderSearchResult(search(this.currentFilm, this.greatestPage));

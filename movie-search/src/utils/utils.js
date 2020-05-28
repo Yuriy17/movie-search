@@ -4,7 +4,6 @@ const corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 
 function getImdbRating(searchResult) {
   const promises = [];
-
   searchResult.Search.forEach((result) => {
     promises.push(
       fetch(
@@ -13,17 +12,17 @@ function getImdbRating(searchResult) {
     );
   });
   return Promise.allSettled(promises).then((res) => {
+    const responseWithRating = Object.assign(searchResult);
     res.forEach((element, index) => {
-      const currentFilm = searchResult.Search[index];
-      if (element.imdbID === currentFilm.imdbID) {
-        currentFilm.imdbRating = element.imdbRating;
+      if (element.value.imdbID === responseWithRating.Search[index].imdbID) {
+        responseWithRating.Search[index].imdbRating = element.value.imdbRating;
       }
     });
-    return searchResult;
+    return responseWithRating;
   });
 }
 
-export async function search(title, greatestPage) {
+export async function search(title, greatestPage = 1) {
   return fetch(
     `${corsAnywhere}http://www.omdbapi.com/?apikey=${API_KEY}&s=${title}&page=${greatestPage}`,
   )
