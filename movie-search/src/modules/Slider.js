@@ -55,15 +55,12 @@ export default class Slider {
       breakpoints: {
         480: {
           slidesPerView: 2,
-          spaceBetween: 20,
         },
         768: {
           slidesPerView: 3,
-          spaceBetween: 30,
         },
         992: {
           slidesPerView: 4,
-          spaceBetween: 40,
         },
       },
     });
@@ -85,8 +82,6 @@ export default class Slider {
   renderSearchResult(resultPromise) {
     const postersInfo = [];
     document.getElementById('loading-icon').classList.remove('hide');
-    console.log(resultPromise);
-
     resultPromise.then((data) => {
       data.Search.forEach((result) => {
         const slideElement = createSlideElement(result);

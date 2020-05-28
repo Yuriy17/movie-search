@@ -1,8 +1,11 @@
 .search-form {
   & > div.rounded-pill {
     height: 3.5rem;
-    & > input[type="search"]{
+    input[type="search"]{
       height: auto;
+      border-bottom-left-radius: 10px;
+      border-top-left-radius: 10px;
+      font-size: 1.5rem;
     }
   }
   .form-control::placeholder {
@@ -28,9 +31,12 @@
   .input-group-append {
     align-items: center;
     #loading-icon {
-      width: 1rem;
-      height: 1rem;
+      width: 2rem;
+      height: 2rem;
       z-index: 5;
+    }
+    .fa-search{
+      font-size: 2rem;
     }
   }
 }
