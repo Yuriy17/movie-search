@@ -2,16 +2,15 @@
   position: relative;
   height: calc(100% - 70px);
   min-height: 796px;
-
-  // background-color: white;
-
   width: 100%;
   .swiper-container {
     height: 100%;
     .swiper-wrapper {
+      justify-content: center;
+
       .swiper-slide {
-        // background-color: #dbdbdb;
         text-align: center;
+        justify-content: center;
 
         @include media-breakpoint-up(lg) {
           height: calc((100% - 40px) / 2);
