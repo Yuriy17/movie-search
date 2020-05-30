@@ -7,6 +7,10 @@
       border-top-left-radius: 10px;
       font-size: 1.5rem;
     }
+    .fa-keyboard{
+      font-size: 2rem;
+      z-index: 1;
+    }
   }
   .form-control::placeholder {
     font-size: 1.5rem;
@@ -33,7 +37,7 @@
     #loading-icon {
       width: 2rem;
       height: 2rem;
-      z-index: 5;
+      z-index: 1;
     }
     .fa-search{
       font-size: 2rem;
