@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
     integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-<!--     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css"> -->
+  <!--     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css"> -->
   <title>Movie search</title>
 </head>
 
@@ -21,18 +21,18 @@
 
       <div class="p-1 pl-2 bg-light rounded rounded-pill shadow-sm mb-4">
         <div class="input-group">
-          <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon1"
-            name="t" autocomplete="off" class="form-control border-0 bg-light search-form__input">
+          <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon1" name="t"
+            autocomplete="off" class="form-control border-0 bg-light search-form__input">
           <div class="input-group-append">
             <div id="loading-icon" class="spinner-border mr-4 hide" role="status">
-              <span  class="sr-only">Loading...</span>
+              <span class="sr-only">Loading...</span>
             </div>
             <div id="total-results" class="hide">
 
             </div>
-            <!-- <i id="loading-icon" class="fa fa-spinner fa-pulse fa-lg hide-loading"></i> -->
-            <i class="fa fa-keyboard"></i>
-            <button id="button-addon1" type="submit" class="btn btn-link text-primary search-form__button"><i
+            <button id="button-keyboard" type="button" class="btn btn-link text-primary search-form__button"><i
+                class="fa fa-keyboard"></i></button>
+            <button id="button-search" type="submit" class="btn btn-link text-primary search-form__button"><i
                 class="fa fa-search"></i></button>
           </div>
         </div>
@@ -41,7 +41,7 @@
 
     </form>
     <div id='slider' class="swiper">
-    <div class="swiper-container">
+      <div class="swiper-container">
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
           <!-- <div class="swiper-slide">
@@ -58,11 +58,11 @@
           </div> -->
 
         </div>
-  
+
         <div class="swiper-pagination"></div>
-  
-  
-  
+
+
+
       </div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
@@ -75,11 +75,23 @@
       <div class="row ">
         <div class="col text-light">RS School 2020Q1</div>
         <div class="col">
-          <a class ="text-light mx-auto" href="https://github.com/Yuriy17"><i class="fab fa-github"></i>Yuriy17</a>
+          <a class="text-light mx-auto" href="https://github.com/Yuriy17"><i class="fab fa-github"></i>Yuriy17</a>
         </div>
       </div>
     </div>
   </footer>
+
+  <div id="virtual-keyboard" class="card border-light bg-primary mb-3 hide">
+    <div class="card-header">
+      <h3 class="text-light">Virtual keyboard</h3>
+      <button id="close-virtual-keyboard" type="button" class="close text-light bg-primary" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+
+    </div>
+  </div>
 </body>
 
 </html>

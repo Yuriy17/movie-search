@@ -65,7 +65,7 @@ export default class Slider {
       },
     });
 
-    this.renderSearchResult(search(this.currentFilm, this.greatestPage));
+    // this.renderSearchResult(search(this.currentFilm, this.greatestPage));
     this.mySwiper.on('slideChange', () => {
       if (this.isReachEnd && (this.mySwiper.activeIndex !== 0)) {
         this.greatestPage += 1;

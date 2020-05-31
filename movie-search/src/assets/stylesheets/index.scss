@@ -17,6 +17,7 @@
 // Optional
 @import 
   '~bootstrap/scss/buttons',
+  '~bootstrap/scss/card',
   '~bootstrap/scss/input-group',
   '~bootstrap/scss/utilities',
   '~bootstrap/scss/forms',
@@ -34,6 +35,7 @@
 
 @import
   'components/swiper',
+  'components/virtual-keyboard',
   'components/search-bar';
   
 @import
