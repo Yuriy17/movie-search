@@ -7,6 +7,7 @@ export default class Search {
       '.search-form__input',
     );
     this.value = inputValue;
+    this.selectionStart = inputValue.length;
     this.searchInputElement.value = this.value;
   }
 
@@ -35,6 +36,10 @@ export default class Search {
   }
 
   addChar(symbol) {
+    console.log(this.selectionStart);
+    console.log(this.value);
+
+
     this.searchInputElement.value = this.value.substring(0, this.selectionStart)
     + symbol
     + this.value.substring(this.selectionStart, this.value.length);
