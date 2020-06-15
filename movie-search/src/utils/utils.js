@@ -1,6 +1,6 @@
 import API_KEY from '../../environment';
-// https://cors-anywhere.herokuapp.com/
-const corsAnywhere = '';
+
+const corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 
 function getImdbRating(searchResult) {
   return searchResult.Response === 'True'
