@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
     integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-  <!--     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css"> -->
   <title>Movie search</title>
 </head>
 
@@ -21,10 +20,10 @@
 
       <div class="p-1 pl-2 bg-light rounded rounded-pill shadow-sm mb-4">
         <div class="input-group">
-          <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon1" name="t"
+          <input id="search-input" type="search" placeholder="What're you searching for?" aria-describedby="button-addon1" name="t"
             autocomplete="off" class="form-control border-0 bg-light search-form__input">
           <div class="input-group-append">
-            <div id="loading-icon" class="spinner-border mr-4 hide" role="status">
+            <div id="loading-icon" class="spinner-border mr-3 hide" role="status">
               <span class="sr-only">Loading...</span>
             </div>
             <div id="total-results" class="hide">
@@ -42,27 +41,8 @@
     </form>
     <div id='slider' class="swiper">
       <div class="swiper-container">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-          <!-- <div class="swiper-slide">
-            <div class="swiper-slide__title">Xdfsgdfg</div>
-            <div class="swiper-slide__poster-block">
-              <img src="./assets/img/poster-not-available.jpg" alt="" srcset="">
-            </div>
-            <div class="swiper-slide__year">2313</div>
-            <div class="swiper-slide__rating">
-              <i class="swiper-slide__rating-star fa fa-star"></i>
-              <i class="fa fa-spinner fa-pulse"></i>
-              <span class="swiper-slide__rating-rank">23</span>
-            </div>
-          </div> -->
-
-        </div>
-
+        <div class="swiper-wrapper"></div>
         <div class="swiper-pagination"></div>
-
-
-
       </div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
