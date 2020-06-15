@@ -3,28 +3,22 @@ import Slider from './Slider';
 import Keyboard from './Keyboard';
 
 export default class App {
-  constructor() {
-    this.virtualKeyboard = null;
-  }
+  init() {
+    const lData = window.localStorage.getItem('movieSearchKeyboard');
 
-  init(language) {
-    if (window.localStorage.getItem('keyboardLocalData')) {
-      this.localData = JSON.parse(
-        window.localStorage.getItem('keyboardLocalData'),
-      );
+    if (lData !== null) {
+      this.localStorageObject = JSON.parse(lData);
     } else {
-      this.localData = {
-        language,
-        inputValue: '',
-      };
+      this.localStorageObject = {};
+      this.localStorageObject.inputValue = '';
     }
 
-    this.slider = new Slider('Sherlock');
-    this.search = new Search(this.localData.inputValue);
+    this.slider = new Slider(this.localStorageObject.inputValue || 'Sherlock');
+    this.search = new Search(this.localStorageObject.inputValue);
 
     document.getElementById('button-keyboard').addEventListener('click', () => {
-      if (!this.virtualKeyboard) {
-        this.virtualKeyboard = new Keyboard(this.localData.language);
+      if (this.virtualKeyboard === undefined) {
+        this.virtualKeyboard = new Keyboard(this.localStorageObject.keyboardLanguage);
         this.virtualKeyboard.init();
         this.activateVirtualKeyboard();
       }
@@ -37,6 +31,17 @@ export default class App {
       this.slider.renderSearchResult.bind(this.slider),
       this.slider.resetSlider.bind(this.slider),
     );
+
+    window.addEventListener('beforeunload', () => {
+      if (this.virtualKeyboard) {
+        this.localStorageObject.keyboardLanguage = this.virtualKeyboard.properties.language || 'ENGLISH';
+      }
+      this.localStorageObject.inputValue = this.search.searchInputElement.value;
+      window.localStorage.setItem(
+        'movieSearchKeyboard',
+        JSON.stringify(this.localStorageObject),
+      );
+    });
   }
 
   activateVirtualKeyboard() {
@@ -72,7 +77,6 @@ export default class App {
         case 'ControlLeft':
         case 'ControlRight':
         case 'CapsLock':
-          // this.search.selectionStart += 1;
           break;
 
         default:
@@ -178,14 +182,5 @@ export default class App {
     document
       .getElementById('close-virtual-keyboard')
       .addEventListener('click', this.virtualKeyboard.toggleShow);
-
-    window.addEventListener('beforeunload', () => {
-      this.localData.inputValue = this.search.searchInputElement.value;
-      this.localData.language = this.virtualKeyboard.properties.language;
-      window.localStorage.setItem(
-        'keyboardLocalData',
-        JSON.stringify(this.localData),
-      );
-    });
   }
 }
