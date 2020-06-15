@@ -36,6 +36,10 @@
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
+          color: $secondary-text-color;
+          &:hover{
+            text-decoration: underline;
+          }
         }
         &__poster-block {
           height: 240px;

@@ -80,14 +80,12 @@ export default class Slider {
   renderSearchResult(resultPromise) {
     const postersInfo = [];
     document.getElementById('loading-icon').classList.remove('hide');
+    const notFoundElement = document.getElementById('not-found');
+    if (notFoundElement) {
+      notFoundElement.remove();
+    }
     resultPromise.then((data) => {
       if (data) {
-        const notFoundElement = document.getElementById('not-found');
-        if (notFoundElement) {
-          console.log(notFoundElement);
-
-          notFoundElement.remove();
-        }
         data.Search.forEach((result) => {
           const slideElement = createSlideElement(result);
           this.mySwiper.appendSlide(slideElement);

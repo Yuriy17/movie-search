@@ -42,4 +42,20 @@ export default class Search {
     + this.value.substring(this.selectionStart, this.value.length);
     this.selectionStart += 1;
   }
+
+  left() {
+    if (this.searchInputElement.selectionStart) {
+      this.searchInputElement.selectionStart -= 1;
+      this.searchInputElement.selectionEnd -= 1;
+      this.selectionStart = this.searchInputElement.selectionStart;
+    }
+  }
+
+  right() {
+    if (this.searchInputElement.selectionStart !== this.searchInputElement.length - 1) {
+      this.searchInputElement.selectionStart += 1;
+      this.searchInputElement.selectionEnd += 1;
+      this.selectionStart = this.searchInputElement.selectionStart;
+    }
+  }
 }

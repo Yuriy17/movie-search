@@ -62,18 +62,14 @@ export default class App {
           this.search.addChar('\n');
           break;
         case 'ArrowRight':
-          this.search.addChar('→');
+          this.search.right();
           break;
         case 'ArrowLeft':
-          this.search.addChar('←');
+          this.search.left();
           break;
 
         case 'ArrowUp':
-          this.search.addChar('↑');
-          break;
         case 'ArrowDown':
-          this.search.addChar('↓');
-          break;
         case 'ControlLeft':
         case 'ControlRight':
         case 'CapsLock':
@@ -127,18 +123,14 @@ export default class App {
               this.search.addChar('\t');
               break;
             case 'arrow_right':
-              this.search.addChar('→');
+              this.search.right();
               break;
             case 'arrow_left':
-              this.search.addChar('←');
-              break;
-            case 'arrow_drop_up':
-              this.search.addChar('↑');
-              break;
-            case 'arrow_drop_down':
-              this.search.addChar('↓');
+              this.search.left();
               break;
 
+            case 'arrow_drop_up':
+            case 'arrow_drop_down':
             case 'Alt':
             case 'Ctrl':
             case 'Shift':

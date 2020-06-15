@@ -72,7 +72,7 @@ export function createSlideElement(slide) {
   slideElement.classList.add('swiper-slide');
 
   slideElement.innerHTML = `
-  <div class="swiper-slide__title">${slide.Title}</div>
+  <a href="https://www.imdb.com/title/${slide.imdbID}/" class="swiper-slide__title" target="_blank">${slide.Title}</a>
   <div class="swiper-slide__poster-block">
     <div class="spinner-border" role="status">
       <span  class="sr-only">Loading...</span>
