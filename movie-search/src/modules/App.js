@@ -13,7 +13,7 @@ export default class App {
       this.localStorageObject.inputValue = '';
     }
 
-    this.slider = new Slider(this.localStorageObject.inputValue || 'Sherlock');
+    this.slider = new Slider(this.localStorageObject.inputValue || 'Fire');
     this.search = new Search(this.localStorageObject.inputValue);
 
     document.getElementById('button-keyboard').addEventListener('click', () => {

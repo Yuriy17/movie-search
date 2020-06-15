@@ -64,8 +64,7 @@ export default class Slider {
         },
       },
     });
-
-    // this.renderSearchResult(search(this.currentFilm, this.greatestPage));
+    this.renderSearchResult(search(this.currentFilm, this.greatestPage));
     this.mySwiper.on('slideChange', () => {
       if (this.isReachEnd && (this.mySwiper.activeIndex !== 0)) {
         this.greatestPage += 1;
@@ -82,19 +81,38 @@ export default class Slider {
     const postersInfo = [];
     document.getElementById('loading-icon').classList.remove('hide');
     resultPromise.then((data) => {
-      data.Search.forEach((result) => {
-        const slideElement = createSlideElement(result);
-        this.mySwiper.appendSlide(slideElement);
-        postersInfo.push({ poster: result.Poster, element: slideElement });
-      });
+      if (data) {
+        const notFoundElement = document.getElementById('not-found');
+        if (notFoundElement) {
+          console.log(notFoundElement);
+
+          notFoundElement.remove();
+        }
+        data.Search.forEach((result) => {
+          const slideElement = createSlideElement(result);
+          this.mySwiper.appendSlide(slideElement);
+          postersInfo.push({ poster: result.Poster, element: slideElement });
+        });
+      } else {
+        document.querySelector('.main').insertAdjacentHTML('afterbegin', `<div id="not-found" class="not-found">
+        <h3>We're Sorry!</h3>
+        <p>
+          We can't seem to find any films that match your search for <span>${document.getElementById('search-input').value}</span>
+        </p>
+      </div>`);
+      }
     }).then(() => {
-      const posterPromises = [];
-      postersInfo.forEach((object) => {
-        posterPromises.push(loadImage(object.poster, object.element));
-      });
-      Promise.allSettled(posterPromises).then(() => {
+      if (postersInfo.length) {
+        const posterPromises = [];
+        postersInfo.forEach((object) => {
+          posterPromises.push(loadImage(object.poster, object.element));
+        });
+        Promise.allSettled(posterPromises).then(() => {
+          document.getElementById('loading-icon').classList.add('hide');
+        });
+      } else {
         document.getElementById('loading-icon').classList.add('hide');
-      });
+      }
     });
   }
 }

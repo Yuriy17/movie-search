@@ -1,25 +1,21 @@
 import API_KEY from '../../environment';
-
-const corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+// https://cors-anywhere.herokuapp.com/
+const corsAnywhere = '';
 
 function getImdbRating(searchResult) {
-  const promises = [];
-  searchResult.Search.forEach((result) => {
-    promises.push(
-      fetch(
-        `${corsAnywhere}http://www.omdbapi.com/?apikey=${API_KEY}&i=${result.imdbID}`,
-      ).then((res) => res.json()),
-    );
-  });
-  return Promise.allSettled(promises).then((res) => {
-    const responseWithRating = Object.assign(searchResult);
-    res.forEach((element, index) => {
-      if (element.value.imdbID === responseWithRating.Search[index].imdbID) {
-        responseWithRating.Search[index].imdbRating = element.value.imdbRating;
-      }
-    });
-    return responseWithRating;
-  });
+  return searchResult.Response === 'True'
+    ? Promise.allSettled(searchResult.Search.map((result) => fetch(
+      `${corsAnywhere}http://www.omdbapi.com/?apikey=${API_KEY}&i=${result.imdbID}`,
+    ).then((res) => res.json())))
+      .then((res) => {
+        const responseWithRating = Object.assign(searchResult);
+        res.forEach((element, index) => {
+          if (element.value.imdbID === responseWithRating.Search[index].imdbID) {
+            responseWithRating.Search[index].imdbRating = element.value.imdbRating;
+          }
+        });
+        return responseWithRating;
+      }) : false;
 }
 
 export async function search(title, greatestPage = 1) {
