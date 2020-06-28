@@ -1,2 +1,2 @@
-# yuriy17-RS2020Q1
-Private repository for @yuriy17
+# movie-search
+https://yuriy17-movie-search.netlify.app
